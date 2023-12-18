@@ -128,20 +128,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FileManagerSudoku.cpp" />
+    <ClCompile Include="GenerateSudoku.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sudoku.cpp" />
     <ClCompile Include="SudokuSolver.cpp" />
-    <ClCompile Include="ValidateSudoku.cpp" />
+    <ClCompile Include="SudokuValidator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileManagerSudoku.h" />
+    <ClInclude Include="GenerateSudoku.h" />
     <ClInclude Include="Sudoku.h" />
     <ClInclude Include="SudokuSolver.h" />
-    <ClInclude Include="ValidateSudoku.h" />
+    <ClInclude Include="SudokuValidator.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="files\file1.txt" />
-    <Text Include="files\file2.txt" />
+    <Text Include="files\userInput.txt" />
+    <Text Include="files\solutions.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

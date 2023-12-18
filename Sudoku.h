@@ -22,16 +22,16 @@
 
 class Sudoku
 {
-	//how many inputs did user get wrong
-	int numIncorrectInputs;
 	int numPlayedGames;
 
-	
 
 	//private constructor and =, to make sure only the one instance exists
 	Sudoku(): isSolved(true){}
 	Sudoku& operator=(const Sudoku&);
 	
+protected:
+	int numCorrectInputs;
+	int numIncorrectInputs;
 public:
 	//current sudoku
 	int sudokuTable[9][9];
@@ -47,6 +47,7 @@ public:
 	//self-explanitory
 	void displayStats();
 	int getGameNum();
+	void setInputs(int correctInputs, int incorrectInputs);
 	//increaces number of rounds played, resets rest to prepare for the new grid
 	void resetStats();
 };

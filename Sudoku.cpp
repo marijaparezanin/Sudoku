@@ -25,6 +25,12 @@ using namespace std;
 void Sudoku::resetStats() {
     numPlayedGames++;
     numIncorrectInputs = 0;
+    numCorrectInputs = 0;
+}
+
+void Sudoku::setInputs(int correctInputs, int incorrectInputs) {
+    numCorrectInputs = correctInputs;
+    numIncorrectInputs = incorrectInputs;
 }
 
 
@@ -34,8 +40,10 @@ int Sudoku::getGameNum() {
 }
 
 void Sudoku::displayStats() {
-    cout << "\nGame played: " << numPlayedGames << endl;
-    cout << "Incorrect inputs: " << numIncorrectInputs << endl;
+    //+1 because i display before I get to write to file. It would be dangerous to increment here
+    cout << "\nGame played: " << numPlayedGames+1 << endl;
+    cout << "Correct inputs: " << numCorrectInputs << endl;
+
 }
 
 std::ostream& operator<<(std::ostream& os, Sudoku& s) {

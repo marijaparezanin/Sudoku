@@ -30,7 +30,10 @@
     <ClCompile Include="FileManagerSudoku.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValidateSudoku.cpp">
+    <ClCompile Include="GenerateSudoku.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SudokuValidator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,15 +47,18 @@
     <ClInclude Include="FileManagerSudoku.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValidateSudoku.h">
+    <ClInclude Include="GenerateSudoku.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SudokuValidator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="files\file1.txt">
+    <Text Include="files\userInput.txt">
       <Filter>files</Filter>
     </Text>
-    <Text Include="files\file2.txt">
+    <Text Include="files\solutions.txt">
       <Filter>files</Filter>
     </Text>
   </ItemGroup>
