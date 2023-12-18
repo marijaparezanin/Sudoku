@@ -1,0 +1,3 @@
+﻿  Main.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Main.cpp(79,21): warning C4102: 'sudokuSolver': unreferenced label
+  Sudoku.vcxproj -> C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\x64\Debug\Sudoku.exe
