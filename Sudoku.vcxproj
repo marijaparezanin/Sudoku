@@ -131,11 +131,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sudoku.cpp" />
     <ClCompile Include="SudokuSolver.cpp" />
+    <ClCompile Include="ValidateSudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileManagerSudoku.h" />
     <ClInclude Include="Sudoku.h" />
     <ClInclude Include="SudokuSolver.h" />
+    <ClInclude Include="ValidateSudoku.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\file1.txt" />

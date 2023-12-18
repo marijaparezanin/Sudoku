@@ -1,3 +1,19 @@
+/*
+    Sudoku.h
+
+    Implementation of the Sudoku grid
+
+    For every round of the game played, a designated instance of this class will be used to hold the current sudoku. I implemented the
+    Singleton design pattern, to make sure I dont accidentally create more than one Sudoku instance.
+
+
+    Author: Marija Parezanin
+    Date: 18.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+
+*/
+
 #include "Sudoku.h"
 
 #include <iostream>
@@ -5,37 +21,12 @@
 
 using namespace std;
 
+
 void Sudoku::resetStats() {
     numPlayedGames++;
-    numCorrectInputs = 0;
-    numOriginalInputs = 0;
+    numIncorrectInputs = 0;
 }
 
-/*
-void Sudoku::displaySudoku() {
-    string k = "";
-    cout << "\t\n------------------\n";
-    for (int i = 0; i < 9;++i) {
-        for (int j = 0;j < 9;++j) {
-            if (j % 3 == 2) {
-                k = "|";
-            }
-            else {
-                k = " ";
-            }
-
-            cout << "\t" << this->sudokuTable[i][j] << k;
-        }
-        if (i % 3 == 2) {
-            k = "\n------------------\n";
-        }
-        else {
-            k = "\n";
-        }
-
-        cout << k;
-    }
-}*/
 
 
 int Sudoku::getGameNum() {
@@ -44,8 +35,7 @@ int Sudoku::getGameNum() {
 
 void Sudoku::displayStats() {
     cout << "\nGame played: " << numPlayedGames << endl;
-    cout << "Correct inputs: " << numCorrectInputs << endl;
-    cout << "Incorrect inputs: " << 91 - numCorrectInputs - numOriginalInputs << endl;
+    cout << "Incorrect inputs: " << numIncorrectInputs << endl;
 }
 
 std::ostream& operator<<(std::ostream& os, Sudoku& s) {

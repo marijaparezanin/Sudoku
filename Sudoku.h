@@ -1,26 +1,30 @@
-#pragma once
-#include <iostream>
+/*	
+	Sudoku.h
 
-
-/*
-	Author: Marija Parezanin 
-	Date: 18.12.2023
-	
 	Implementation of the Sudoku grid
 
 	For every round of the game played, a designated instance of this class will be used to hold the current sudoku. I implemented the
 	Singleton design pattern, to make sure I dont accidentally create more than one Sudoku instance. 
+
+	
+	Author: Marija Parezanin
+	Date: 18.12.2023
+	email: marija.parezanin@mensa.ba
+	F: FTN SIIT, SV1/2022
+	
 */
+
+#pragma once
+#include <iostream>
+
+
 
 
 class Sudoku
 {
-	//how many inputs did user get right
-	int numCorrectInputs;
+	//how many inputs did user get wrong
+	int numIncorrectInputs;
 	int numPlayedGames;
-	//how many filled numbers were in it originally
-	//calculated when generating/reading from file
-	int numOriginalInputs;
 
 	
 
@@ -40,12 +44,15 @@ public:
 		return instance;
 	}
 
+	//self-explanitory
 	void displayStats();
 	int getGameNum();
+	//increaces number of rounds played, resets rest to prepare for the new grid
 	void resetStats();
 };
 
 
+//overriding system =, prints the sudoku grid in a "pretty" format. 
 std::ostream& operator<<(std::ostream& os, Sudoku& s);
 
 

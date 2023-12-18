@@ -1,3 +1,10 @@
-﻿  Main.cpp
-C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Main.cpp(79,21): warning C4102: 'sudokuSolver': unreferenced label
+﻿  FileManagerSudoku.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\FileManagerSudoku.cpp(49,3): warning C4102: 'std': unreferenced label
+  Main.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Main.cpp(78,21): warning C4102: 'sudokuSolver': unreferenced label
+  Sudoku.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Sudoku.cpp(42,5): warning C4102: 'std': unreferenced label
+  SudokuSolver.cpp
+  ValidateSudoku.cpp
+  Generating Code...
   Sudoku.vcxproj -> C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\x64\Debug\Sudoku.exe

@@ -9,7 +9,7 @@ using namespace std;
 
 namespace fms {
 
-	void read_file(Sudoku& s, std::string filePath) {
+	void readFile(Sudoku& s, std::string filePath) {
 		ifstream ifile;
 		ifile.open(filePath);
 
@@ -18,7 +18,6 @@ namespace fms {
 			std::cerr << "Error: file could not be opened" << endl;
 			return;
 		}
-
 
 		string line;
 		int row_num = 0;
@@ -31,15 +30,13 @@ namespace fms {
 				if (line[i] == '0') {
 					s.isSolved = false;
 				}
-
-
 				s.sudokuTable[row_num][i] = line[i] - '0';
 			}
 			row_num++;
 		}
 	}
 
-	void write_file(Sudoku& s, std::string filePath) {
+	void writeFile(Sudoku& s, std::string filePath) {
 		ofstream ofile;
 		ofile.open(filePath, std::ios::app);
 
@@ -61,6 +58,8 @@ namespace fms {
 		s.resetStats();
 	}
 
-
+	void readUserSolution(Sudoku& s, std::string filePath) {
+		
+	}
 
 }

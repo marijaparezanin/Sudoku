@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) {
     }
 
     //argv[0] is program name
-    string user_file = argv[1];
-    string my_file = argv[2];
+    string userFile = argv[1];
+    string myFile = argv[2];
 
 	
 
@@ -56,13 +56,12 @@ int main(int argc, char* argv[]) {
         cin >> choice;
 
         if (choice == 1) {
-            fms::read_file(sudoku, user_file);
+            fms::readFile(sudoku, userFile);
             cout << sudoku;
 
             if (sudoku.isSolved) {
-                //validate
+                //TO DO validate
                 //stats
-                cout << "solved";
             }
             else {
                 cout << "\n----------------------------------------------------------------------" << endl;
@@ -72,22 +71,22 @@ int main(int argc, char* argv[]) {
                 cin >> choice;
 
                 if (choice == 1) {
-                    //user solves
+                    //TO DO user solves
                 }
                 else {
                     //program solves
                     sudokuSolver:sudokuSolver(sudoku);
                     cout << sudoku;
-                    fms::write_file(sudoku, user_file);
+                    fms::writeFile(sudoku, userFile);
                 }
             }
             
         }
         else {
-            //generate sudoku
+            //TO DO generate sudoku in that function i need to calculate how many filled vals there are
             cout << sudoku;
             //write sudoku base
-            fms::write_file(sudoku, my_file);
+            fms::writeFile(sudoku, myFile);
             cout << "\n----------------------------------------------------------------------" << endl;
             cout << "Do you want to: \n";
             cout << "\t1. Try solving it\n";
@@ -100,7 +99,7 @@ int main(int argc, char* argv[]) {
                 //program solves
                 sudokuSolver(sudoku);
                 cout << sudoku;
-                fms::write_file(sudoku, my_file);
+                fms::writeFile(sudoku, myFile);
             }
 
         }
