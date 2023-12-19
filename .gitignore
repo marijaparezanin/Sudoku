@@ -1,0 +1,39 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake build directory
+build/
+
+# Ignore .vscode folder if using Visual Studio Code
+.vscode/
+
+# Ignore .idea folder if using JetBrains IDEs like IntelliJ or CLion
+.idea/
+
+# Ignore the generated documentation folder
+doc/
+
+# Ignore any local editor or IDE configuration files
+*.vs
+*.suo
+*.ide
+
+# Ignore any backup files
+*~
