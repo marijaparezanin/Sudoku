@@ -35,6 +35,11 @@ doc/
 *.suo
 *.ide
 .vs/
+*.sln
+*.vcxproj.user
+*.vcxproj.filters
+*.vcxproj
+
 
 # Ignore any backup files
 *~
