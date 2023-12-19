@@ -4,10 +4,6 @@
 *.o
 *.obj
 
-# Ignore Visual Studio Debug folders
-Debug/
-x64/
-
 # Precompiled Headers
 *.gch
 *.pch
@@ -38,6 +34,7 @@ doc/
 *.vs
 *.suo
 *.ide
+.vs/
 
 # Ignore any backup files
 *~
