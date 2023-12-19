@@ -3,10 +3,12 @@
 
     Basic menu for a Sudoku game
 
-    Through commandline arguments are passed two files, userInput and solutions. The user can choose
+    Through commandline arguments are passed 3 files, userInput, userOutput and solutions. The user can choose
     to load up an empty/filled sudoku from the userInput file and solve/validate it. It can also request
-    the program generate an empty sudoku. Afterward the sudoku can be solved by user or computer, and 
-    solved sudokus will be writen to file. An infinite amount of games can be played.
+    the program generate an empty sudoku. Afterward the sudoku can be solved by user or computer, and  computer
+    solved sudokus will be writen to file. If the user wishes to solve the sudoku they can enter the file path
+    to the txt file with their solutions, the program will review it and print out statistics.
+    An infinite amount of games can be played.
 
 
     Author: Marija Parezanin
@@ -14,7 +16,6 @@
     email: marija.parezanin@mensa.ba
     F: FTN SIIT, SV1/2022
 */
-
 
 #include <iostream>
 #include <fstream>
@@ -24,24 +25,60 @@
 #include "SudokuSolver.h"
 #include "FileManagerSudoku.h"
 #include "SudokuValidator.h"
+#include "GenerateSudoku.h"
 
 using namespace std;
 
+//Holds the current sudoku
+static Sudoku& sudoku = Sudoku::getInstance();
+static SudokuValidator& validator = SudokuValidator::getInstance();
 
+
+//since identical code appears twice I've placed it in this function
+//reads user solution and compares it to a sudoku solved by my program
+void userSolves() {
+    string userOutputFile;
+    cout << "\n----------------------------------------------------------------------" << endl;
+    cout << "Enter the file path of your solution: ";
+    cin >> userOutputFile;
+
+    sudokuSolver(sudoku);
+    bool areEqual = fms::readUserSolution(sudoku, userOutputFile);
+
+    if (areEqual) {
+        cout << "\n\t\All good!" << endl;
+        sudoku.displayStats();
+    }
+    else {
+        cout << "\n\t\tIncorrectly solved" << endl;
+        sudoku.displayStats();
+    }
+
+    sudoku.incPlayedGames();
+}
+
+//identical code appears 3 times
+//checks sudoku validity and prints gane statistic
+void printValid() {
+    if (validator.validate()) {
+        cout << "\n\t\All good!" << endl;
+        sudoku.displayStats();
+    }
+    else {
+        cout << "\n\t\tIncorrectly solved" << endl;
+        sudoku.displayStats();
+    }
+}
 
 int main(int argc, char* argv[]) {
-    //Holds the current sudoku
-	Sudoku& sudoku = Sudoku::getInstance();
-    SudokuValidator& validator = SudokuValidator::getInstance();
-
     //If no files have been passed
-    if (argc == 1) {
-        std::cerr << "Error: expected 2 file paths to be passed via commandline" << endl;
+    if (argc != 3) {
+        std::cerr << "Error: expected 3 file paths to be passed via commandline" << endl;
         return 0;
     }
 
     //argv[0] is program name
-    string userFile = argv[1];
+    string userInputFile = argv[1];
     string myFile = argv[2];
 
     cout << "----------------------Welcome to SudokuSphere!----------------------\n";
@@ -54,16 +91,14 @@ int main(int argc, char* argv[]) {
 
         if (choice == 1) {
             //Pre-made sudoku
-            fms::readFile(sudoku, userFile);    //fms is a namespace for FileManagerSudoku
+            fms::readFile(sudoku, userInputFile);    //fms is a namespace for FileManagerSudoku
             cout << sudoku;
+            sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
+
+
 
             if (sudoku.isSolved) {
-                if (validator.validate()) {
-                    cout << "Correct!" << endl;
-                    sudoku.displayStats();
-                }
-                cout << "Incorrectly solved" << endl;
-                sudoku.displayStats();
+                printValid();
             }
             else {
                 cout << "\n----------------------------------------------------------------------" << endl;
@@ -73,46 +108,47 @@ int main(int argc, char* argv[]) {
                 cin >> choice;
 
 
-                if (validator.validate()) {
-                    cout << "Correct!" << endl;
-                    sudoku.displayStats();
-                }
-                cout << "Incorrectly solved" << endl;
-                sudoku.displayStats();
-
-
-
                 if (choice == 1) {
                     //user solves
-                    //TO DO user solves
+                    userSolves();
                 }
                 else {
                     //program solves
-                    sudokuSolver:sudokuSolver(sudoku);
+                    sudokuSolver(sudoku);
                     cout << sudoku;
-                    fms::writeFile(sudoku, userFile);
+
+                    printValid();
+                    fms::writeFile(sudoku, userInputFile);
                 }
             }
         }
         else {
             //TO DO generate sudoku
+            generateBaseSudoku(sudoku, 10);
+            sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
+
+
             cout << sudoku;
             //write sudoku base
-            fms::writeFile(sudoku, myFile);
+            fms::writeFile(sudoku, myFile, false);
+            
+
             cout << "\n----------------------------------------------------------------------" << endl;
             cout << "Do you want to: \n";
             cout << "\t1. Try solving it\n";
             cout << "\t2. See the solution\n\t:";
             cin >> choice;
+
             if (choice == 1) {
                 //user solves
-
-
+                userSolves();
             }
             else {
                 //program solves
                 sudokuSolver(sudoku);
                 cout << sudoku;
+
+                printValid();
                 fms::writeFile(sudoku, myFile);
             }
 
@@ -129,34 +165,10 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         else {
-            //+1 because the numGame is incremented when a completed Sudoku is written in the file
+            cout << "\n----------------------------------------------------------------------" << endl;
+            //+1 because the numGame is incremented when a completed Sudoku is written in the file, or called so
             cout << "\nRound "<<sudoku.getGameNum() + 1<<"!\n";
         }
     }
     return 0;
 }
-
-
-
-
-
-
-void assign(Sudoku& s) {    //Arrays are not assignable as a whole in C++. When dealing with arrays, you need to copy their content element-wise or use functions designed to perform array copying.
-    int table[9][9] = {
-    {9, 0, 0, 0, 2, 0, 0, 0, 3},
-    {0, 3, 0, 1, 0, 8, 0, 7, 0},
-    {0, 0, 6, 0, 0, 0, 9, 0, 0},
-    {0, 9, 0, 0, 4, 0, 0, 3, 0},
-    {1, 0, 0, 7, 0, 9, 0, 0, 2},
-    {0, 2, 0, 0, 6, 0, 0, 9, 0},
-    {0, 0, 5, 0, 0, 0, 8, 0, 0},
-    {0, 8, 0, 4, 0, 2, 0, 5, 0},
-    {3, 0, 0, 0, 8, 0, 0, 0, 1}
-    };
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            s.sudokuTable[i][j] = table[i][j];
-        }
-    }
-}
-

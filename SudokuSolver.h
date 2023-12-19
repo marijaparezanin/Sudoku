@@ -16,8 +16,5 @@
 #pragma once
 #include "Sudoku.h"
 
-
-
 //acceps a reference to the sudoku object and returns true/false if the grid is solveable
 bool sudokuSolver(Sudoku& sudoku);
-

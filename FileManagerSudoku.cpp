@@ -36,7 +36,7 @@ namespace fms {
 		}
 	}
 
-	void writeFile(Sudoku& s, std::string filePath) {
+	void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
 		ofstream ofile;
 		ofile.open(filePath, std::ios::app);
 
@@ -55,10 +55,45 @@ namespace fms {
 			line = "\n";
 		}
 
+		//because when the game is generated we write base+solution, but should inc once
+		if (incGameNum) {
+			s.incPlayedGames();
+		}
 		s.resetStats();
 	}
 
-	void readUserSolution(Sudoku& s, std::string filePath) {
+	bool readUserSolution(Sudoku& s, std::string filePath) {
+		ifstream ifile;
+		ifile.open(filePath);
+
+
+		if (!ifile) { // file couldn't be opened
+			std::cerr << "Error: file could not be opened" << endl;
+			return false;
+		}
+
+		string line;
+		int row_num = 0;
+		int numIncorrect = 0;
+		while (true) {
+			ifile >> line;
+			if (row_num == 9) {
+				break;
+			}
+			for (int i = 0; i < line.length(); i++) {
+				if ((line[i] - '0') != s.sudokuTable[row_num][i]) {
+					numIncorrect++;
+				}
+			}
+			row_num++;
+		}
+
+		s.setInputs(81 - numIncorrect, 0);
+
+		if (numIncorrect != 0) {
+			return false;
+		}
+		return true;
 		
 	}
 

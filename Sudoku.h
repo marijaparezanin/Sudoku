@@ -18,12 +18,9 @@
 #include <iostream>
 
 
-
-
 class Sudoku
 {
 	int numPlayedGames;
-
 
 	//private constructor and =, to make sure only the one instance exists
 	Sudoku(): isSolved(true){}
@@ -32,10 +29,13 @@ class Sudoku
 protected:
 	int numCorrectInputs;
 	int numIncorrectInputs;
+	int numOriginalInputs;
 public:
 	//current sudoku
 	int sudokuTable[9][9];
 	bool isSolved;
+	int numEmptyInputs;
+
 
 
 	//even though this function can get called multiple times, only the one instance will exist
@@ -47,14 +47,20 @@ public:
 	//self-explanitory
 	void displayStats();
 	int getGameNum();
-	void setInputs(int correctInputs, int incorrectInputs);
-	//increaces number of rounds played, resets rest to prepare for the new grid
+	void setInputs(int correctInputs, int emptyInputs);
+	void setOriginalInputs(int originalInputs);
+
+	//so i can differentiate how many fields user filled vs how many were alrady filled in the beginning
+	void countOriginal();
+
+	//increaces number of rounds played
+	void incPlayedGames();
+	//resets rest to prepare for the new grid
 	void resetStats();
+	//need reseting when im generating an empty sudoku
+	void resetGrid();
 };
 
 
 //overriding system =, prints the sudoku grid in a "pretty" format. 
 std::ostream& operator<<(std::ostream& os, Sudoku& s);
-
-
-

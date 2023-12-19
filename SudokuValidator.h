@@ -1,6 +1,24 @@
+/*
+    SudokuValidator.h
+
+    Class that checks the validity of a Sudoku
+
+    Upon creation a private constructor is called (singleton design pattern), the linkedSudoku is initialized with the instance of Sudoku.
+    It has 3 private functions that check if the 3 rules of sudoku are fulfilled. 
+    Public validate function that returns true/false if the Sudoku is in accordance with the rules, and it also edits the statistical values
+    of the Sudoku object. 
+
+    Author: Marija Parezanin
+    Date: 19.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+*/
+
+
+
+
 #pragma once
 #include "Sudoku.h"
-#include <iostream>
 
 
 

@@ -16,6 +16,9 @@
     <Filter Include="files">
       <UniqueIdentifier>{797925b4-b62b-4e85-8c06-545ee06a6787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{6a32f16b-41b9-4d58-9805-db4cd7e4cd7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

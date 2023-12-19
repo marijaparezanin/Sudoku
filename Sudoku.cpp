@@ -23,17 +23,42 @@ using namespace std;
 
 
 void Sudoku::resetStats() {
-    numPlayedGames++;
     numIncorrectInputs = 0;
     numCorrectInputs = 0;
 }
 
-void Sudoku::setInputs(int correctInputs, int incorrectInputs) {
-    numCorrectInputs = correctInputs;
-    numIncorrectInputs = incorrectInputs;
+void Sudoku::incPlayedGames() {
+    numPlayedGames++;
 }
 
+void Sudoku::resetGrid() {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            sudokuTable[i][j] = 0;
+        }
+    }
+}
 
+void Sudoku::setInputs(int correctInputs, int emptyInputs) {
+    numCorrectInputs = correctInputs;
+    numIncorrectInputs = 81-emptyInputs-correctInputs;
+    numEmptyInputs = emptyInputs;
+}
+
+void Sudoku::countOriginal() {
+    numOriginalInputs = 0;
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (sudokuTable[i][j] != 0) {
+                numOriginalInputs++;
+            }
+        }
+    }
+}
+
+void Sudoku::setOriginalInputs(int originalInputs) {
+    this->numOriginalInputs = numOriginalInputs;
+}
 
 int Sudoku::getGameNum() {
     return numPlayedGames;
@@ -42,7 +67,9 @@ int Sudoku::getGameNum() {
 void Sudoku::displayStats() {
     //+1 because i display before I get to write to file. It would be dangerous to increment here
     cout << "\nGame played: " << numPlayedGames+1 << endl;
-    cout << "Correct inputs: " << numCorrectInputs << endl;
+    //original is counted when the board is set, correct is counted in validate
+    cout << "Correct inputs: " << numCorrectInputs - numOriginalInputs << endl;
+    cout << "Inorrect inputs: " << numIncorrectInputs << endl;
 
 }
 

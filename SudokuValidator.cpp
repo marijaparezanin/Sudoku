@@ -1,30 +1,27 @@
 #include "SudokuValidator.h"
 #include "Sudoku.h"
 
-#include <iostream>
-using namespace std;
 
 bool SudokuValidator::validate() {
-    int numIncorrectInputs = 0;
+    int numEmpty = 0;
     int numCorrectInputs = 0;
 
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (linkedSudoku.sudokuTable[i][j] == 0) {
-                continue;
+                numEmpty++;
             }
-            if (rowCheck(i, j, linkedSudoku.sudokuTable[i][j]) && colCheck(j, i, linkedSudoku.sudokuTable[i][j]) && boxCheck(i, j, linkedSudoku.sudokuTable[i][j])) {
+            else if (rowCheck(i, j, linkedSudoku.sudokuTable[i][j]) && colCheck(j, i, linkedSudoku.sudokuTable[i][j]) && boxCheck(i, j, linkedSudoku.sudokuTable[i][j])) {
                 numCorrectInputs++;
                 continue;
             }
-            numIncorrectInputs++;
         }
     }
 
-    linkedSudoku.setInputs(numCorrectInputs, numIncorrectInputs);
+    linkedSudoku.setInputs(numCorrectInputs, numEmpty);
 
 
-    if (numIncorrectInputs != 0) {
+    if (numCorrectInputs + numEmpty != 81) {
         return false;
     }
     return true;
