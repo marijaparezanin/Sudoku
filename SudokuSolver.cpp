@@ -14,16 +14,13 @@
     F: FTN SIIT, SV1/2022
 */
 
-
 #include "SudokuSolver.h"
 
 #include <iostream>
 #include <string>
-
 #include "Sudoku.h"
 
 using namespace std;
-
 
 //checks if the value i wish to place already exists in the row
 bool rowCheck(int(&sudokuTable)[9][9], int row, int val) {

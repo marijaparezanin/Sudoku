@@ -1,5 +1,17 @@
-#include "FileManagerSudoku.h"
+/*
+	FileManager.h
 
+	Providing I/O services for the Sudoku class. Can read sudoku from file, write sudoku to file, and read and confirm if a solution from a user file
+	is what's expected.
+
+	Author: Marija Parezanin
+	Date: 18.12.2023
+	email: marija.parezanin@mensa.ba
+	F: FTN SIIT, SV1/2022
+
+*/
+
+#include "FileManagerSudoku.h"
 #include "Sudoku.h"
 #include <iostream>
 #include <string>
@@ -8,7 +20,7 @@ using namespace std;
 
 
 namespace fms {
-
+	//read sudoku from file
 	void readFile(Sudoku& s, std::string filePath) {
 		ifstream ifile;
 		ifile.open(filePath);
@@ -36,6 +48,7 @@ namespace fms {
 		}
 	}
 
+	//write sudoku to file, increment the number of games played
 	void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
 		ofstream ofile;
 		ofile.open(filePath, std::ios::app);
@@ -62,6 +75,7 @@ namespace fms {
 		s.resetStats();
 	}
 
+	//read and confirm if a solution from a user file is what's expected in the sudoku object
 	bool readUserSolution(Sudoku& s, std::string filePath) {
 		ifstream ifile;
 		ifile.open(filePath);
@@ -96,5 +110,4 @@ namespace fms {
 		return true;
 		
 	}
-
 }

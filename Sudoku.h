@@ -36,8 +36,6 @@ public:
 	bool isSolved;
 	int numEmptyInputs;
 
-
-
 	//even though this function can get called multiple times, only the one instance will exist
 	static Sudoku& getInstance() {
 		static Sudoku instance;
@@ -49,10 +47,8 @@ public:
 	int getGameNum();
 	void setInputs(int correctInputs, int emptyInputs);
 	void setOriginalInputs(int originalInputs);
-
 	//so i can differentiate how many fields user filled vs how many were alrady filled in the beginning
 	void countOriginal();
-
 	//increaces number of rounds played
 	void incPlayedGames();
 	//resets rest to prepare for the new grid

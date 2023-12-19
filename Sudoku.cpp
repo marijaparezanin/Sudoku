@@ -15,22 +15,23 @@
 */
 
 #include "Sudoku.h"
-
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-
+//self-explanatory
 void Sudoku::resetStats() {
     numIncorrectInputs = 0;
     numCorrectInputs = 0;
 }
 
+//self-explanatory
 void Sudoku::incPlayedGames() {
     numPlayedGames++;
 }
 
+//self-explanatory
 void Sudoku::resetGrid() {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
@@ -39,12 +40,14 @@ void Sudoku::resetGrid() {
     }
 }
 
+//self-explanatory
 void Sudoku::setInputs(int correctInputs, int emptyInputs) {
     numCorrectInputs = correctInputs;
     numIncorrectInputs = 81-emptyInputs-correctInputs;
     numEmptyInputs = emptyInputs;
 }
 
+//count the number of values that are filled in the base grid
 void Sudoku::countOriginal() {
     numOriginalInputs = 0;
     for (int i = 0; i < 9; i++) {
@@ -73,6 +76,7 @@ void Sudoku::displayStats() {
 
 }
 
+//making cout << sudoku have a pretty output
 std::ostream& operator<<(std::ostream& os, Sudoku& s) {
     std:string content = "\n\t -------------------\n";
     for (int i = 0; i < 9;++i) {

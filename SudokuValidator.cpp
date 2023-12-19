@@ -2,6 +2,21 @@
 #include "Sudoku.h"
 
 
+/*
+    SudokuValidator.cpp
+
+    Checks the validity of a Sudoku, works with the linked sudoku, so it can edit its paramathers and be updated on its changes.
+    rowCheck, colCheck, boxCheck verifies if the 3 rules of Sudoku are respected.
+    
+
+    Author: Marija Parezanin
+    Date: 19.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+*/
+
+
+//main validate function that works with the linked sudoku and returns if the sudoku is valid
 bool SudokuValidator::validate() {
     int numEmpty = 0;
     int numCorrectInputs = 0;

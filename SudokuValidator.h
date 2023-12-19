@@ -14,13 +14,8 @@
     F: FTN SIIT, SV1/2022
 */
 
-
-
-
 #pragma once
 #include "Sudoku.h"
-
-
 
 class SudokuValidator{
     //making sure that a change to the sudoku automatically changes the sudoku
@@ -31,9 +26,11 @@ class SudokuValidator{
     bool colCheck(int col, int position, int val);
     bool boxCheck(int row, int col, int val);
 
+    //making it private to reinforce singleton
     SudokuValidator() :linkedSudoku(Sudoku::getInstance()) {}
     Sudoku& operator=(const Sudoku&);
 public:
+
     static SudokuValidator& getInstance() {
         static SudokuValidator instance;
         return instance;
