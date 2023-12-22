@@ -32,6 +32,10 @@ namespace fms {
 		}
 
 		string line;
+		if (line == "") {
+			s.isSolved = false;
+		}
+
 		int row_num = 0;
 		while (true) {
 			ifile >> line;
@@ -59,7 +63,7 @@ namespace fms {
 			return;
 		}
 
-		std:string line = "\n\n";
+		std:string line;
 		for (int i = 0; i < 9;i++) {
 			for (int j = 0; j < 9; j++) {
 				line += std::to_string(s.sudokuTable[i][j]);
@@ -67,6 +71,7 @@ namespace fms {
 			ofile << line;
 			line = "\n";
 		}
+		ofile << "\n\n";
 
 		//because when the game is generated we write base+solution, but should inc once
 		if (incGameNum) {
@@ -75,6 +80,26 @@ namespace fms {
 		s.resetStats();
 	}
 
+	//for prettier solutions file, i write a line to split rounds
+	void writeEndOfRound(std::string filePath, int gameRound) {
+		ofstream ofile;
+		ofile.open(filePath, std::ios::app);
+
+
+		if (!ofile) { // file couldn't be opened
+			std::cerr << "Error: file could not be opened" << endl;
+			return;
+		}
+
+		ofile << "---------------------------------------------------Round ";
+		ofile << gameRound;
+		ofile << "\n\n";
+		
+
+	}
+
+
+	/*
 	//read and confirm if a solution from a user file is what's expected in the sudoku object
 	bool readUserSolution(Sudoku& s, std::string filePath) {
 		ifstream ifile;
@@ -109,5 +134,5 @@ namespace fms {
 		}
 		return true;
 		
-	}
+	}*/
 }

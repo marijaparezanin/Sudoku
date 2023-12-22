@@ -25,6 +25,7 @@ class Sudoku
 	//private constructor and =, to make sure only the one instance exists
 	Sudoku(): isSolved(true){}
 	Sudoku& operator=(const Sudoku&);
+
 	
 protected:
 	int numCorrectInputs;
@@ -45,8 +46,12 @@ public:
 	//self-explanitory
 	void displayStats();
 	int getGameNum();
+	int getCorrectInputs();
+	int getIncorrectInputs();
+	int getOriginalInputs();
 	void setInputs(int correctInputs, int emptyInputs);
 	void setOriginalInputs(int originalInputs);
+
 	//so i can differentiate how many fields user filled vs how many were alrady filled in the beginning
 	void countOriginal();
 	//increaces number of rounds played
@@ -55,6 +60,16 @@ public:
 	void resetStats();
 	//need reseting when im generating an empty sudoku
 	void resetGrid();
+
+
+	//checks if the value already exists in the row
+	bool rowCheck(int row, int position, int val);
+	//checks if the valuealready exists in the column
+	bool colCheck(int col, int position, int val);
+	//checks if the value already exists in the 3x3 box
+	bool boxCheck(int row, int col, int val);
+	//returns if the sudoku is filled correctly (even if it isnt completely filled)
+	bool validate();
 };
 
 

@@ -31,21 +31,24 @@ using namespace std;
 
 //Holds the current sudoku
 static Sudoku& sudoku = Sudoku::getInstance();
-static SudokuValidator& validator = SudokuValidator::getInstance();
 
 
 //since identical code appears twice I've placed it in this function
 //reads user solution and compares it to a sudoku solved by my program
-void userSolves() {
+void userSolves(string solutionsFilePath) {
     string userOutputFile;
     cout << "\n----------------------------------------------------------------------" << endl;
     cout << "Enter the file path of your solution: ";
     cin >> userOutputFile;
 
-    sudokuSolver(sudoku);
-    bool areEqual = fms::readUserSolution(sudoku, userOutputFile);
+    //i cant do this in case there are multiple sudoku solutions
+    //sudokuSolver(sudoku);
+    //bool areEqual = fms::readUserSolution(sudoku, userOutputFile);
 
-    if (areEqual) {
+    fms::readFile(sudoku, userOutputFile);
+    fms::writeFile(sudoku, solutionsFilePath, false);
+
+    if (sudoku.validate()) {
         cout << "\n\t\All good!" << endl;
         sudoku.displayStats();
     }
@@ -60,7 +63,7 @@ void userSolves() {
 //identical code appears 3 times
 //checks sudoku validity and prints gane statistic
 void printValid() {
-    if (validator.validate()) {
+    if (sudoku.validate()) {
         cout << "\n\t\All good!" << endl;
         sudoku.displayStats();
     }
@@ -73,7 +76,7 @@ void printValid() {
 int main(int argc, char* argv[]) {
     //If no files have been passed
     if (argc != 3) {
-        std::cerr << "Error: expected 3 file paths to be passed via commandline" << endl;
+        std::cerr << "Error: expected 2 file paths to be passed via commandline" << endl;
         return 0;
     }
 
@@ -94,7 +97,7 @@ int main(int argc, char* argv[]) {
             fms::readFile(sudoku, userInputFile);    //fms is a namespace for FileManagerSudoku
             cout << sudoku;
             sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
-
+            fms::writeFile(sudoku, myFile, false);  //i want every sudoku base and solution written in my solutions file
 
 
             if (sudoku.isSolved) {
@@ -110,21 +113,59 @@ int main(int argc, char* argv[]) {
 
                 if (choice == 1) {
                     //user solves
-                    userSolves();
+                    userSolves(myFile);
                 }
                 else {
                     //program solves
-                    sudokuSolver(sudoku);
+                    bool solvable = sudokuSolver(sudoku);
                     cout << sudoku;
 
-                    printValid();
-                    fms::writeFile(sudoku, userInputFile);
+                    if (solvable) {
+                        printValid();
+                    }
+                    else {
+                        cout << "\nSudoku has an error! Cant be solved.\n";
+                    }
+
+                    fms::writeFile(sudoku, myFile);
                 }
             }
         }
         else {
-            //TO DO generate sudoku
-            generateBaseSudoku(sudoku, 10);
+            //generate sudoku
+            int difficultyChoice;
+            cout << "\n----------------------------------------------------------------------" << endl;
+            cout << "Choose the difficulty level: \n";
+            cout << "\t1. Easy (~45 filled cells)\n";
+            cout << "\t2. Medium (~40 filled cells)\n";
+            cout << "\t3. Hard (~35 filled cells)\n";
+            cout << "\t4. Extreme (~20 filled cells)\n";
+            cout << "\t5. Insane (~10 filled cells)\n";
+
+            cout << "\t:";
+            cin >> difficultyChoice;
+
+            switch (difficultyChoice) {
+            case 1:
+                generateBaseSudoku(sudoku, 45);
+                break;
+            case 2:
+                generateBaseSudoku(sudoku, 40);
+                break;
+            case 3:
+                generateBaseSudoku(sudoku, 35);
+                break;
+            case 4:
+                generateBaseSudoku(sudoku, 20);
+                break;
+            case 5:
+                generateBaseSudoku(sudoku, 10);
+                break;
+            default:
+                std::cout << "Invalid choice";
+                break;
+            }
+
             sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
 
 
@@ -141,7 +182,7 @@ int main(int argc, char* argv[]) {
 
             if (choice == 1) {
                 //user solves
-                userSolves();
+                userSolves(myFile);
             }
             else {
                 //program solves
@@ -153,6 +194,8 @@ int main(int argc, char* argv[]) {
             }
 
         }
+
+        fms::writeEndOfRound(myFile, sudoku.getGameNum());
 
         cout << "\n----------------------------------------------------------------------" << endl;
         cout << "Do you want to keep playing?\n";

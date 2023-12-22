@@ -19,8 +19,13 @@
 #include <iostream>
 #include <string>
 #include "Sudoku.h"
+#include <vector>
+#include <cstdlib> // For rand
 
 using namespace std;
+
+
+
 
 //checks if the value i wish to place already exists in the row
 bool rowCheck(int(&sudokuTable)[9][9], int row, int val) {
@@ -56,18 +61,50 @@ bool boxCheck(int(&sudokuTable)[9][9], int row, int col, int val) {
     return true;
 }
 
-//returns indexes of the first empty spot it finds (looking left to right)
-//returns -1,-1 if the sudoku is solved
+
+/*
+ Finds an empty cell (with value 0) in a Sudoku grid and identifies a cell with the fewest possible valid values to place.
+ returns coordinates of an empty cell that minimizes the number of possible valid values, or {-1, -1} if no empty cells exist.
+ implemented random choice so that when working with an empty grid its more random
+ */
 pair<int, int> findEmpty(int(&sudokuTable)[9][9]) {
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+    int minPossibilities = 10; // init with a value greater than possible options
+    vector<pair<int, int>> minPossibilityCells;
+
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
             if (sudokuTable[i][j] == 0) {
-                return { i, j };
+                int possibilities = 0;
+                for (int num = 1; num <= 9; ++num) {
+                    if (rowCheck(sudokuTable, i, num) && colCheck(sudokuTable, j, num) && boxCheck(sudokuTable, i, j, num)) {
+                        possibilities++;
+                    }
+                }
+                if (possibilities < minPossibilities) {
+                    minPossibilities = possibilities;
+                    minPossibilityCells.clear();
+
+
+                    //using emplace back instead of push back because constructing std::pair<int, int> directly within the vector
+                    // is more efficient than creating temporary pairs before adding them to the vector.
+                    minPossibilityCells.emplace_back(i, j);
+                }
+                else if (possibilities == minPossibilities) {
+                    minPossibilityCells.emplace_back(i, j);
+                }
             }
         }
     }
-    return { -1, -1 };
+
+    // Randomly select one of the cells with the fewest possibilities using rand()
+    if (!minPossibilityCells.empty()) {
+        int randomIndex = rand() % minPossibilityCells.size();
+        return minPossibilityCells[randomIndex];
+    }
+
+    return { -1, -1 }; // No empty cells found
 }
+
 
 
 //described in header, directly edits the multidimentional array in the passed sudoku object

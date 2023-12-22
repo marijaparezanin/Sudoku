@@ -15,7 +15,7 @@
     F: FTN SIIT, SV1/2022
 */
 
-
+/*
 //main validate function that works with the linked sudoku and returns if the sudoku is valid
 bool SudokuValidator::validate() {
     int numEmpty = 0;
@@ -76,3 +76,5 @@ bool SudokuValidator::boxCheck(int row, int col, int val) {
     }
     return true;
 }
+
+*/

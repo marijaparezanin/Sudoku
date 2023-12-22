@@ -1,0 +1,7 @@
+﻿  Main.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Main.cpp(52,17): warning C4129: 'A': unrecognized character escape sequence
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Main.cpp(67,17): warning C4129: 'A': unrecognized character escape sequence
+  Sudoku.cpp
+C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\Sudoku.cpp(158,5): warning C4102: 'std': unreferenced label
+  Generating Code...
+  Sudoku.vcxproj -> C:\Users\masam\OneDrive\Desktop\faks\oop2\Sudoku\Attempt3Sudoku\Sudoku\x64\Debug\Sudoku.exe
