@@ -39,6 +39,7 @@ doc/
 *.vcxproj.user
 *.vcxproj.filters
 *.vcxproj
+x64/
 
 
 # Ignore any backup files
