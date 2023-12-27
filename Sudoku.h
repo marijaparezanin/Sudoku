@@ -21,21 +21,24 @@
 class Sudoku
 {
 	int numPlayedGames;
-
-	//private constructor and =, to make sure only the one instance exists
-	Sudoku(): isSolved(true){}
-	Sudoku& operator=(const Sudoku&);
-
-	
-protected:
 	int numCorrectInputs;
 	int numIncorrectInputs;
-	int numOriginalInputs;
+	int numOriginalInputs;	//fields that were filled in the base grid
+
+
+	//private constructor and =, to make sure only the one instance exists
+	Sudoku(): isSolved(true), matchesBaseGrid(true){}
+	Sudoku& operator=(const Sudoku&);
 public:
 	//current sudoku
 	int sudokuTable[9][9];
 	bool isSolved;
 	int numEmptyInputs;
+
+
+	//in case of the user solution not matching the base grid
+	bool matchesBaseGrid;
+
 
 	//even though this function can get called multiple times, only the one instance will exist
 	static Sudoku& getInstance() {

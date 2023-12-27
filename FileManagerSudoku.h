@@ -28,6 +28,4 @@ namespace fms {
 
 	//writes a line to just seperate the look of rounds in solutions file
 	void writeEndOfRound(std::string filePath, int gameRound);
-
-
 }

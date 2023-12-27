@@ -21,14 +21,11 @@
 #include <vector>
 #include <cstdlib> // For rand
 #include "Sudoku.h"
-
-
 using namespace std;
 
 
 
-
-//checks if the value i wish to place already exists in the row
+//checks if the value i wish to place already exists in the row, accepts grid, which row to check and value to check for repetition
 bool rowCheck(int(&sudokuTable)[9][9], int row, int val) {
     for (int j = 0; j < 9; j++) {
         if (val == sudokuTable[row][j]) {
@@ -38,7 +35,7 @@ bool rowCheck(int(&sudokuTable)[9][9], int row, int val) {
     return true;
 }
 
-//checks if the value i wish to place already exists in the column
+//checks if the value i wish to place already exists in the column, accepts grid, which col to check and value to check for repetition
 bool colCheck(int(&sudokuTable)[9][9], int col, int val) {
     for (int i = 0; i < 9; i++) {
         if (val == sudokuTable[i][col]) {
@@ -48,7 +45,7 @@ bool colCheck(int(&sudokuTable)[9][9], int col, int val) {
     return true;
 }
 
-//checks if the value i wish to place already exists in the 3x3 box
+//checks if the value i wish to place already exists in the 3x3 box, accepts grid, which row and column to check, and value to check for repetition
 bool boxCheck(int(&sudokuTable)[9][9], int row, int col, int val) {
     int r = (row / 3) * 3;
     int c = (col / 3) * 3;
@@ -64,10 +61,10 @@ bool boxCheck(int(&sudokuTable)[9][9], int row, int col, int val) {
 
 
 /*
- Finds an empty cell (with value 0) in a Sudoku grid and identifies a cell with the fewest possible valid values to place.
- returns coordinates of an empty cell that minimizes the number of possible valid values, or {-1, -1} if no empty cells exist.
- implemented random choice so that when working with an empty grid its more random
- */
+* Finds which empty cells have the fewest possible values, then among those who have the minimum num of possible values randomly
+* chooses one to send back its coordinates. Returns {-1,-1} if no empty cells exist. 
+* Implemented random choice so that when working with an empty grid its more random
+*/
 pair<int, int> findEmpty(int(&sudokuTable)[9][9]) {
     int minPossibilities = 10; // init with a value greater than possible options
     vector<pair<int, int>> minPossibilityCells;
@@ -81,7 +78,7 @@ pair<int, int> findEmpty(int(&sudokuTable)[9][9]) {
                         possibilities++;
                     }
                 }
-                if (possibilities < minPossibilities) {
+                if (possibilities < minPossibilities) { //then i have a new standard for whats the minimum
                     minPossibilities = possibilities;
                     minPossibilityCells.clear();
 

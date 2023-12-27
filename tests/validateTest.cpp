@@ -1,5 +1,7 @@
-#include "Sudoku.h"
+#include "TestRunner.h"
+
 #include <iostream>
+#include "../Sudoku.h"
 
 using namespace std;
 
@@ -131,7 +133,7 @@ bool testEmptySudoku() {
 }
 
 
-int main() {
+void displayTestValidate() {
     // Perform tests
     bool allTestsPassed = true;
 
@@ -150,14 +152,10 @@ int main() {
     //should say the empty correct is valid
     allTestsPassed &= testEmptySudoku();
 
-
-
     if (allTestsPassed) {
-        std::cout << "All tests passed successfully!\n";
+        std::cout << "Validator tests passed!\n";
     }
     else {
-        std::cout << "Some tests failed..\n";
+        std::cout << "Some validator tests failed..\n";
     }
-
-    return 0;
 }

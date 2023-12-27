@@ -12,7 +12,7 @@
 
 
     Author: Marija Parezanin
-    Date: 20.12.2023
+    Date: 27.12.2023
     email: marija.parezanin@mensa.ba
     F: FTN SIIT, SV1/2022
 */
@@ -24,8 +24,8 @@
 #include "Sudoku.h"
 #include "SudokuSolver.h"
 #include "FileManagerSudoku.h"
-#include "SudokuValidator.h"
 #include "GenerateSudoku.h"
+#include "tests/TestRunner.h"
 
 using namespace std;
 
@@ -47,6 +47,12 @@ void userSolves(string solutionsFilePath, string userSolutionPath) {
 
     fms::readFile(sudoku, userSolutionPath);
     fms::writeFile(sudoku, solutionsFilePath, false);
+
+    if (!sudoku.matchesBaseGrid) {
+        cout << "\n\tYour solution doesnt seem to match the base grid provided. \n" << endl;
+        //i dont count this as a game played
+        return;
+    }
 
     if (sudoku.validate()) {
         cout << "\n\t\All good!" << endl;
@@ -73,10 +79,10 @@ void printValid() {
     }
 }
 
-int main1(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     //If no files have been passed
-    if (argc != 4) {
-        std::cerr << "Error: expected 2 file paths to be passed via commandline" << endl;
+    if (argc != 5) {
+        std::cerr << "Error: expected 4 file paths via commandline\n\t-user setup\n\t-solutions\n\t-user solution\n\t-display generated" << endl;
         return 0;
     }
 
@@ -84,6 +90,7 @@ int main1(int argc, char* argv[]) {
     string userSetUp = argv[1];
     string allSolutions = argv[2];
     string userSolution = argv[3];
+    string viewGenerated = argv[4];  //the file i want to present to user to review generated grid
 
     cout << "----------------------Welcome to SudokuSphere!----------------------\n";
     int choice = 0;
@@ -96,6 +103,7 @@ int main1(int argc, char* argv[]) {
 
             if (choice == 1) {
                 //Pre-made sudoku
+                sudoku.resetGrid();
                 fms::readFile(sudoku, userSetUp);    //fms is a namespace for FileManagerSudoku
                 cout << sudoku;
                 sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
@@ -174,6 +182,8 @@ int main1(int argc, char* argv[]) {
                 cout << sudoku;
                 //write sudoku base
                 fms::writeFile(sudoku, allSolutions, false);
+                fms::writeFile(sudoku, viewGenerated, false);
+
 
 
                 cout << "\n----------------------------------------------------------------------" << endl;
@@ -196,7 +206,8 @@ int main1(int argc, char* argv[]) {
                 }
 
             }
-
+            //i want to remove the file i used to let the user see the setup
+            remove(viewGenerated.c_str());
             fms::writeEndOfRound(allSolutions, sudoku.getGameNum());
 
             cout << "\n----------------------------------------------------------------------" << endl;
@@ -207,6 +218,19 @@ int main1(int argc, char* argv[]) {
 
             if (choice == 2) {
                 cout << "\nThank you for playing!\n";
+
+                cout << "\n----------------------------------------------------------------------" << endl;
+                cout << "Display tests? \n";
+                cout << "\t1. Yes!\n";
+                cout << "\t2. No.\n\t: ";
+                cin >> choice;
+
+                if (choice == 1) {
+                    displayTestGenerate();
+                    displayTestSolver();
+                    displayTestValidate();
+                }
+
                 return 1;
             }
             else {

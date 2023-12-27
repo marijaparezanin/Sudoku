@@ -21,7 +21,6 @@
 using namespace std;
 
 
-//self-explanatory
 void Sudoku::resetGrid() {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
@@ -31,13 +30,11 @@ void Sudoku::resetGrid() {
 }
 
 
-//self-explanatory
 void Sudoku::resetStats() {
     numIncorrectInputs = 0;
     numCorrectInputs = 0;
 }
 
-//self-explanatory
 void Sudoku::incPlayedGames() {
     numPlayedGames++;
 }
@@ -54,6 +51,8 @@ void Sudoku::countOriginal() {
     }
 }
 
+
+//inputs that already existed in the grid
 void Sudoku::setOriginalInputs(int originalInputs) {
     this->numOriginalInputs = numOriginalInputs;
 }
@@ -83,9 +82,8 @@ void Sudoku::displayStats() {
 
 }
 
-#include <unordered_map>
         
-
+//return true if the sudoku has been filled well so far, accepts incomplete sudokus
 bool Sudoku::validate() {
     numEmptyInputs = 0;
     numIncorrectInputs = 0;
@@ -114,6 +112,7 @@ bool Sudoku::validate() {
 
 
 //checks if the value already exists in the row
+//accepts in which row to look for duplicates of the value. Position is the postion of the value we're watching
 bool Sudoku::rowCheck(int row, int position, int val) {
     for (int j = 0; j < 9; j++) {
         if (j != position && val == sudokuTable[row][j]) {
@@ -123,7 +122,8 @@ bool Sudoku::rowCheck(int row, int position, int val) {
     return true;
 }
 
-//checks if the valuealready exists in the column
+//checks if the value already exists in the column
+//accepts in which column to look for duplicates of the value. Position is the postion of the value we're watching
 bool Sudoku::colCheck(int col, int position, int val) {
     for (int i = 0; i < 9; i++) {
         if (i != position && val == sudokuTable[i][col]) {
@@ -134,6 +134,7 @@ bool Sudoku::colCheck(int col, int position, int val) {
 }
 
 //checks if the value already exists in the 3x3 box
+//row and column are the coordinates of the value we're watching
 bool Sudoku::boxCheck(int row, int col, int val) {
     int r = (row / 3) * 3;
     int c = (col / 3) * 3;
@@ -149,8 +150,8 @@ bool Sudoku::boxCheck(int row, int col, int val) {
 
 
 //making cout << sudoku have a pretty output
-std::ostream& operator<<(std::ostream& os, Sudoku& s) {
-    std:string content = "\n\t -------------------\n";
+ostream& operator<<(std::ostream& os, Sudoku& s) {
+    string content = "\n\t -------------------\n";
     for (int i = 0; i < 9;++i) {
         content += "\t |";
         for (int j = 0;j < 9;++j) {
@@ -185,5 +186,3 @@ std::ostream& operator<<(std::ostream& os, Sudoku& s) {
     }
     return os << content << endl;
 }
-
-

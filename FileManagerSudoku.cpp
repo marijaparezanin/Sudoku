@@ -5,7 +5,7 @@
 	is what's expected.
 
 	Author: Marija Parezanin
-	Date: 18.12.2023
+	Date: 22.12.2023
 	email: marija.parezanin@mensa.ba
 	F: FTN SIIT, SV1/2022
 
@@ -20,7 +20,7 @@ using namespace std;
 
 
 namespace fms {
-	//read sudoku from file
+	//read sudoku from file on the passed path
 	void readFile(Sudoku& s, std::string filePath) {
 		ifstream ifile;
 		ifile.open(filePath);
@@ -35,8 +35,10 @@ namespace fms {
 		if (line == "") {
 			s.isSolved = false;
 		}
+		s.matchesBaseGrid = true;
 
 		int row_num = 0;
+		int value = 0;
 		while (true) {
 			ifile >> line;
 			if (row_num == 9) {
@@ -46,13 +48,22 @@ namespace fms {
 				if (line[i] == '0') {
 					s.isSolved = false;
 				}
-				s.sudokuTable[row_num][i] = line[i] - '0';
+
+				value = line[i] - '0';
+				if (s.sudokuTable[row_num][i] == 0 || s.sudokuTable[row_num][i] == value) {
+					s.sudokuTable[row_num][i] = value;
+				}
+				else {//if the original value of the base grid gets changed, the user is not solvinng the correct grid
+					s.matchesBaseGrid = false;
+				}
+
 			}
 			row_num++;
 		}
 	}
 
-	//write sudoku to file, increment the number of games played
+	//write sudoku to file
+	//accepts sudoku to write, file path to write to and whether the number of rounds should be incremented
 	void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
 		ofstream ofile;
 		ofile.open(filePath, std::ios::app);
@@ -63,14 +74,40 @@ namespace fms {
 			return;
 		}
 
-		std:string line;
-		for (int i = 0; i < 9;i++) {
-			for (int j = 0; j < 9; j++) {
-				line += std::to_string(s.sudokuTable[i][j]);
+		string content = "\n\t -------------------\n";
+		for (int i = 0; i < 9;++i) {
+			content += "\t |";
+			for (int j = 0;j < 9;++j) {
+				//formating help
+				if (j % 3 == 2) {
+					if (s.sudokuTable[i][j] == 0) {
+						content += " |";
+					}
+					else {
+						content += std::to_string(s.sudokuTable[i][j]) + "|";
+					}
+
+				}
+				else {
+					if (s.sudokuTable[i][j] == 0) {
+						content += "  ";
+					}
+					else {
+						content += std::to_string(s.sudokuTable[i][j]) + " ";
+					}
+				}
+
+
 			}
-			ofile << line;
-			line = "\n";
+			if (i % 3 == 2) {
+				content += "\n\t -------------------\n";
+			}
+			else {
+				content += "\n";
+			}
+
 		}
+		ofile << content;
 		ofile << "\n\n";
 
 		//because when the game is generated we write base+solution, but should inc once
@@ -85,7 +122,6 @@ namespace fms {
 		ofstream ofile;
 		ofile.open(filePath, std::ios::app);
 
-
 		if (!ofile) { // file couldn't be opened
 			throw std::invalid_argument("Provided file cant be opened");
 			return;
@@ -94,45 +130,5 @@ namespace fms {
 		ofile << "---------------------------------------------------Round ";
 		ofile << gameRound;
 		ofile << "\n\n";
-		
-
 	}
-
-
-	/*
-	//read and confirm if a solution from a user file is what's expected in the sudoku object
-	bool readUserSolution(Sudoku& s, std::string filePath) {
-		ifstream ifile;
-		ifile.open(filePath);
-
-
-		if (!ifile) { // file couldn't be opened
-			std::cerr << "Error: file could not be opened" << endl;
-			return false;
-		}
-
-		string line;
-		int row_num = 0;
-		int numIncorrect = 0;
-		while (true) {
-			ifile >> line;
-			if (row_num == 9) {
-				break;
-			}
-			for (int i = 0; i < line.length(); i++) {
-				if ((line[i] - '0') != s.sudokuTable[row_num][i]) {
-					numIncorrect++;
-				}
-			}
-			row_num++;
-		}
-
-		s.setInputs(81 - numIncorrect, 0);
-
-		if (numIncorrect != 0) {
-			return false;
-		}
-		return true;
-		
-	}*/
 }

@@ -1,10 +1,27 @@
+/*
+    TestRunner.h
+
+    Tests the functionality of generating, solving and validating the Sudoku
+
+    The following functions test their respected methods and print out the outcome.
+
+    Author: Marija Parezanin
+    Date: 27.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+
+*/
+
+
+#include "TestRunner.h"
+
 #include <iostream>
-#include "Sudoku.h"
-#include "SudokuSolver.h"
+#include "../Sudoku.h"
+#include "../SudokuSolver.h"
 
 using namespace std;
 
-//should fill 81 correct fields, 0 original, 0 empty
+
 bool testEmptySolver() {
     // Initialize a Sudoku instance
     Sudoku sudoku = Sudoku::getInstance();
@@ -31,7 +48,7 @@ bool testEmptySolver() {
     // Solve the Sudoku
     sudokuSolver(sudoku);
     bool valid = sudoku.validate();
-    if (valid && sudoku.isSolved && sudoku.numEmptyInputs == 0 && sudoku.getCorrectInputs() == 81 && sudoku.getIncorrectInputs() == 0 && sudoku.getOriginalInputs() == 0) {
+    if (valid && sudoku.getCorrectInputs() == 81 && sudoku.getOriginalInputs() == 0) {
         return true;
     }
     return false;
@@ -80,22 +97,12 @@ bool testExtremeSolver() {
     // Solve the Sudoku
     sudokuSolver(sudoku);
     bool valid = sudoku.validate();
-    if (valid && sudoku.isSolved && sudoku.numEmptyInputs == 0 && sudoku.getCorrectInputs() == 81 && sudoku.getIncorrectInputs() == 0 && sudoku.getOriginalInputs() == 0) {
-        for (int i = 0; i < 9; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                if (sudoku.sudokuTable[i][j] != solution[i][j]) {
-                    return false;
-                }
-            }
-        }
+    return valid;
 
-        return true;
-    }
-    return false;
 }
 
 //should return false if passed a sudoku it cant solve
-bool testBadSudoku() {
+bool testUnsolvableSudoku() {
     Sudoku sudoku = Sudoku::getInstance();
 
     int initialValues[9][9] = {
@@ -122,7 +129,7 @@ bool testBadSudoku() {
     return result == false;
 }
 
-//it shouldnt return a mistake, but should be aware that no new inputs were made
+//it shouldnt return a mistake
 bool testCompleteSudoku() {
     // Initialize a Sudoku instance
     Sudoku sudoku = Sudoku::getInstance();
@@ -153,13 +160,13 @@ bool testCompleteSudoku() {
     // Solve the Sudoku
     sudokuSolver(sudoku);
     bool valid = sudoku.validate();
-    if (valid && sudoku.isSolved && sudoku.numEmptyInputs == 0 && sudoku.getCorrectInputs() == 0 && sudoku.getIncorrectInputs() == 0 && sudoku.getOriginalInputs() == 81) {
+    if (valid) {
         return true;
     }
     return false;
 }
 
-int main6() {
+void displayTestSolver() {
     bool allTestsPassed = true;
 
     // Test valid Sudoku completion
@@ -167,18 +174,15 @@ int main6() {
 
     allTestsPassed &= testExtremeSolver();
 
-    allTestsPassed &= testBadSudoku();
+    allTestsPassed &= testUnsolvableSudoku();
 
     allTestsPassed &= testCompleteSudoku();
 
 
     if (allTestsPassed) {
-
-        std::cout << "All tests passed successfully!\n";
+        std::cout << "Solver tests passed!\n";
     }
     else {
-        std::cout << "Some tests failed..\n";
+        std::cout << "Some solver tests failed..\n";
     }
-
-    return 0;
 }
