@@ -27,7 +27,7 @@ namespace fms {
 
 
 		if (!ifile) { // file couldn't be opened
-			std::cerr << "Error: file could not be opened" << endl;
+			throw std::invalid_argument("Provided file cant be opened");
 			return;
 		}
 
@@ -59,7 +59,7 @@ namespace fms {
 
 
 		if (!ofile) { // file couldn't be opened
-			std::cerr << "Error: file could not be opened" << endl;
+			throw std::invalid_argument("Provided file cant be opened");
 			return;
 		}
 
@@ -87,7 +87,7 @@ namespace fms {
 
 
 		if (!ofile) { // file couldn't be opened
-			std::cerr << "Error: file could not be opened" << endl;
+			throw std::invalid_argument("Provided file cant be opened");
 			return;
 		}
 

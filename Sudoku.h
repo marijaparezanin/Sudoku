@@ -49,7 +49,6 @@ public:
 	int getCorrectInputs();
 	int getIncorrectInputs();
 	int getOriginalInputs();
-	void setInputs(int correctInputs, int emptyInputs);
 	void setOriginalInputs(int originalInputs);
 
 	//so i can differentiate how many fields user filled vs how many were alrady filled in the beginning
@@ -70,6 +69,9 @@ public:
 	bool boxCheck(int row, int col, int val);
 	//returns if the sudoku is filled correctly (even if it isnt completely filled)
 	bool validate();
+
+	//nothing to dellocate
+	~Sudoku() {}
 };
 
 

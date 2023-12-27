@@ -42,14 +42,6 @@ void Sudoku::incPlayedGames() {
     numPlayedGames++;
 }
 
-
-//self-explanatory
-void Sudoku::setInputs(int correctInputs, int emptyInputs) {
-    numCorrectInputs = correctInputs - numOriginalInputs;
-    numIncorrectInputs = 81-emptyInputs-correctInputs;
-    numEmptyInputs = emptyInputs;
-}
-
 //count the number of values that are filled in the base grid
 void Sudoku::countOriginal() {
     numOriginalInputs = 0;
@@ -91,27 +83,30 @@ void Sudoku::displayStats() {
 
 }
 
+#include <unordered_map>
+        
 
 bool Sudoku::validate() {
-    int numEmpty = 0;
-    int numCorrectInputs = 0;
+    numEmptyInputs = 0;
+    numIncorrectInputs = 0;
+    numCorrectInputs = 0;
 
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (sudokuTable[i][j] == 0) {
-                numEmpty++;
-            }
-            else if (rowCheck(i, j, sudokuTable[i][j]) && colCheck(j, i, sudokuTable[i][j]) && boxCheck(i, j, sudokuTable[i][j])) {
-                numCorrectInputs++;
+                numEmptyInputs++;
                 continue;
             }
+            else if (!rowCheck(i, j, sudokuTable[i][j]) || !colCheck(j, i, sudokuTable[i][j]) || !boxCheck(i, j, sudokuTable[i][j])) {
+                numIncorrectInputs++;
+                continue;
+            }
+            numCorrectInputs++;
         }
     }
 
-    setInputs(numCorrectInputs, numEmpty);
-
-
-    if (numCorrectInputs + numEmpty != 81 && numOriginalInputs+numEmpty != 81) {
+    
+    if (numIncorrectInputs != 0) {
         return false;
     }
     return true;

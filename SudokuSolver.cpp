@@ -18,9 +18,10 @@
 
 #include <iostream>
 #include <string>
-#include "Sudoku.h"
 #include <vector>
 #include <cstdlib> // For rand
+#include "Sudoku.h"
+
 
 using namespace std;
 

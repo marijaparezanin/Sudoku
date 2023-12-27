@@ -29,6 +29,5 @@ namespace fms {
 	//writes a line to just seperate the look of rounds in solutions file
 	void writeEndOfRound(std::string filePath, int gameRound);
 
-	//reads user solution and checks if it matches the passed solved sudoku. During the process it calculates statistics
-	bool readUserSolution(Sudoku& s, std::string filePath);
+
 }
