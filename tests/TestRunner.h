@@ -16,3 +16,4 @@
 void displayTestGenerate();
 void displayTestSolver();
 void displayTestValidate();
+void displayTestFile();

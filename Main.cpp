@@ -41,12 +41,8 @@ void userSolves(string solutionsFilePath, string userSolutionPath) {
     cin.get();
 
 
-    //i cant do this in case there are multiple sudoku solutions
-    //sudokuSolver(sudoku);
-    //bool areEqual = fms::readUserSolution(sudoku, userOutputFile);
-
-    fms::readFile(sudoku, userSolutionPath);
-    fms::writeFile(sudoku, solutionsFilePath, false);
+    readFile(sudoku, userSolutionPath);
+    writeFile(sudoku, solutionsFilePath, false);
 
     if (!sudoku.matchesBaseGrid) {
         cout << "\n\tYour solution doesnt seem to match the base grid provided. \n" << endl;
@@ -104,10 +100,10 @@ int main(int argc, char* argv[]) {
             if (choice == 1) {
                 //Pre-made sudoku
                 sudoku.resetGrid();
-                fms::readFile(sudoku, userSetUp);    //fms is a namespace for FileManagerSudoku
+                readFile(sudoku, userSetUp); 
                 cout << sudoku;
                 sudoku.countOriginal();         //since the base sudoku has been set i can count the pre-filled fields
-                fms::writeFile(sudoku, allSolutions, false);  //i want every sudoku base and solution written in my solutions file
+                writeFile(sudoku, allSolutions, false);  //i want every sudoku base and solution written in my solutions file
 
 
                 if (sudoku.isSolved) {
@@ -137,7 +133,7 @@ int main(int argc, char* argv[]) {
                             cout << "\nSudoku has an error! Cant be solved.\n";
                         }
 
-                        fms::writeFile(sudoku, allSolutions);
+                        writeFile(sudoku, allSolutions);
                     }
                 }
             }
@@ -181,8 +177,8 @@ int main(int argc, char* argv[]) {
 
                 cout << sudoku;
                 //write sudoku base
-                fms::writeFile(sudoku, allSolutions, false);
-                fms::writeFile(sudoku, viewGenerated, false);
+                writeFile(sudoku, allSolutions, false);
+                writeFile(sudoku, viewGenerated, false);
 
 
 
@@ -202,13 +198,13 @@ int main(int argc, char* argv[]) {
                     cout << sudoku;
 
                     printValid();
-                    fms::writeFile(sudoku, allSolutions);
+                    writeFile(sudoku, allSolutions);
                 }
 
             }
             //i want to remove the file i used to let the user see the setup
             remove(viewGenerated.c_str());
-            fms::writeEndOfRound(allSolutions, sudoku.getGameNum());
+            writeEndOfRound(allSolutions, sudoku.getGameNum());
 
             cout << "\n----------------------------------------------------------------------" << endl;
             cout << "Do you want to keep playing?\n";
@@ -229,6 +225,7 @@ int main(int argc, char* argv[]) {
                     displayTestGenerate();
                     displayTestSolver();
                     displayTestValidate();
+                    displayTestFile();
                 }
 
                 return 1;

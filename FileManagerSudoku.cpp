@@ -19,116 +19,112 @@
 using namespace std;
 
 
-namespace fms {
-	//read sudoku from file on the passed path
-	void readFile(Sudoku& s, std::string filePath) {
-		ifstream ifile;
-		ifile.open(filePath);
+//read sudoku from file on the passed path
+void readFile(Sudoku& s, std::string filePath) {
+	ifstream ifile;
+	ifile.open(filePath);
 
 
-		if (!ifile) { // file couldn't be opened
-			throw std::invalid_argument("Provided file cant be opened");
-			return;
-		}
-
-		string line;
-		if (line == "") {
-			s.isSolved = false;
-		}
-		s.matchesBaseGrid = true;
-
-		int row_num = 0;
-		int value = 0;
-		while (true) {
-			ifile >> line;
-			if (row_num == 9) {
-				return;
-			}
-			for (int i = 0; i < line.length(); i++) {
-				if (line[i] == '0') {
-					s.isSolved = false;
-				}
-
-				value = line[i] - '0';
-				if (s.sudokuTable[row_num][i] == 0 || s.sudokuTable[row_num][i] == value) {
-					s.sudokuTable[row_num][i] = value;
-				}
-				else {//if the original value of the base grid gets changed, the user is not solvinng the correct grid
-					s.matchesBaseGrid = false;
-				}
-
-			}
-			row_num++;
-		}
+	if (!ifile) { // file couldn't be opened
+		throw std::invalid_argument("Provided file cant be opened");
+		return;
 	}
 
-	//write sudoku to file
-	//accepts sudoku to write, file path to write to and whether the number of rounds should be incremented
-	void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
-		ofstream ofile;
-		ofile.open(filePath, std::ios::app);
+	string line;
+	s.isSolved = true;
+	s.matchesBaseGrid = true;
 
-
-		if (!ofile) { // file couldn't be opened
-			throw std::invalid_argument("Provided file cant be opened");
+	int row_num = 0;
+	int value = 0;
+	while (true) {
+		ifile >> line;
+		if (row_num == 9 || line == "") {
 			return;
 		}
+		for (int i = 0; i < line.length(); i++) {
+			if (line[i] == '0') {
+				s.isSolved = false;
+			}
 
-		string content = "\n\t -------------------\n";
-		for (int i = 0; i < 9;++i) {
-			content += "\t |";
-			for (int j = 0;j < 9;++j) {
-				//formating help
-				if (j % 3 == 2) {
-					if (s.sudokuTable[i][j] == 0) {
-						content += " |";
-					}
-					else {
-						content += std::to_string(s.sudokuTable[i][j]) + "|";
-					}
+			value = line[i] - '0';
+			if (s.sudokuTable[row_num][i] == 0 || s.sudokuTable[row_num][i] == value) {
+				s.sudokuTable[row_num][i] = value;
+			}
+			else {//if the original value of the base grid gets changed, the user is not solvinng the correct grid
+				s.matchesBaseGrid = false;
+			}
 
+		}
+		row_num++;
+	}
+}
+
+//write sudoku to file
+//accepts sudoku to write, file path to write to and whether the number of rounds should be incremented
+void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
+	ofstream ofile;
+	ofile.open(filePath, std::ios::app);
+
+
+	if (!ofile) { // file couldn't be opened
+		throw std::invalid_argument("Provided file cant be opened");
+		return;
+	}
+
+	string content = "\n\t -------------------\n";
+	for (int i = 0; i < 9;++i) {
+		content += "\t |";
+		for (int j = 0;j < 9;++j) {
+			//formating help
+			if (j % 3 == 2) {
+				if (s.sudokuTable[i][j] == 0) {
+					content += " |";
 				}
 				else {
-					if (s.sudokuTable[i][j] == 0) {
-						content += "  ";
-					}
-					else {
-						content += std::to_string(s.sudokuTable[i][j]) + " ";
-					}
+					content += std::to_string(s.sudokuTable[i][j]) + "|";
 				}
 
-
-			}
-			if (i % 3 == 2) {
-				content += "\n\t -------------------\n";
 			}
 			else {
-				content += "\n";
+				if (s.sudokuTable[i][j] == 0) {
+					content += "  ";
+				}
+				else {
+					content += std::to_string(s.sudokuTable[i][j]) + " ";
+				}
 			}
 
-		}
-		ofile << content;
-		ofile << "\n\n";
 
-		//because when the game is generated we write base+solution, but should inc once
-		if (incGameNum) {
-			s.incPlayedGames();
 		}
-		s.resetStats();
+		if (i % 3 == 2) {
+			content += "\n\t -------------------\n";
+		}
+		else {
+			content += "\n";
+		}
+
+	}
+	ofile << content;
+	ofile << "\n\n";
+
+	//because when the game is generated we write base+solution, but should inc once
+	if (incGameNum) {
+		s.incPlayedGames();
+	}
+	s.resetStats();
+}
+
+//for prettier solutions file, i write a line to split rounds
+void writeEndOfRound(std::string filePath, int gameRound) {
+	ofstream ofile;
+	ofile.open(filePath, std::ios::app);
+
+	if (!ofile) { // file couldn't be opened
+		throw std::invalid_argument("Provided file cant be opened");
+		return;
 	}
 
-	//for prettier solutions file, i write a line to split rounds
-	void writeEndOfRound(std::string filePath, int gameRound) {
-		ofstream ofile;
-		ofile.open(filePath, std::ios::app);
-
-		if (!ofile) { // file couldn't be opened
-			throw std::invalid_argument("Provided file cant be opened");
-			return;
-		}
-
-		ofile << "---------------------------------------------------Round ";
-		ofile << gameRound;
-		ofile << "\n\n";
-	}
+	ofile << "---------------------------------------------------Round ";
+	ofile << gameRound;
+	ofile << "\n\n";
 }
