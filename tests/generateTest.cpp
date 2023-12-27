@@ -1,3 +1,15 @@
+/*
+    generateTest.cpp
+
+    Tests various scenarios for the function that generates a base grid sudoku grids.
+
+    Author: Marija Parezanin
+    Date: 27.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+
+*/
+
 #include "TestRunner.h"
 
 #include <iostream>

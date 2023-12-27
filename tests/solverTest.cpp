@@ -1,9 +1,7 @@
 /*
-    TestRunner.h
+    solverTest.cpp
 
-    Tests the functionality of generating, solving and validating the Sudoku
-
-    The following functions test their respected methods and print out the outcome.
+    Tests various scenarios for the function that solves sudoku grids. 
 
     Author: Marija Parezanin
     Date: 27.12.2023

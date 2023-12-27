@@ -1,3 +1,16 @@
+/*
+    validateTest.cpp
+
+    Tests various scenarios for the function that checks the validity of sudoku grids.
+    It makes sure the grid respects the 3 rules of sudoku(row, column and box uniqness)
+
+    Author: Marija Parezanin
+    Date: 27.12.2023
+    email: marija.parezanin@mensa.ba
+    F: FTN SIIT, SV1/2022
+
+*/
+
 #include "TestRunner.h"
 
 #include <iostream>
