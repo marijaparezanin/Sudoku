@@ -71,6 +71,7 @@ public:
 	//checks if the value already exists in the 3x3 box
 	bool boxCheck(int row, int col, int val);
 	//returns if the sudoku is filled correctly (even if it isnt completely filled)
+
 	bool validate();
 
 	//nothing to dellocate

@@ -32,6 +32,20 @@ using namespace std;
 //Holds the current sudoku
 static Sudoku& sudoku = Sudoku::getInstance();
 
+//identical code appears 3 times
+//checks sudoku validity and prints gane statistic
+void printValid() {
+    if (sudoku.validate()) {
+        cout << "\n\t\All good!" << endl;
+        sudoku.displayStats();
+    }
+    else {
+        cout << "\n\t\tIncorrectly solved" << endl;
+        sudoku.displayStats();
+    }
+}
+
+
 //since identical code appears twice I've placed it in this function
 //reads user solution and compares it to a sudoku solved by my program
 void userSolves(string solutionsFilePath, string userSolutionPath) {
@@ -50,30 +64,11 @@ void userSolves(string solutionsFilePath, string userSolutionPath) {
         return;
     }
 
-    if (sudoku.validate()) {
-        cout << "\n\t\All good!" << endl;
-        sudoku.displayStats();
-    }
-    else {
-        cout << "\n\t\tIncorrectly solved" << endl;
-        sudoku.displayStats();
-    }
-
+    
+    printValid();
     sudoku.incPlayedGames();
 }
 
-//identical code appears 3 times
-//checks sudoku validity and prints gane statistic
-void printValid() {
-    if (sudoku.validate()) {
-        cout << "\n\t\All good!" << endl;
-        sudoku.displayStats();
-    }
-    else {
-        cout << "\n\t\tIncorrectly solved" << endl;
-        sudoku.displayStats();
-    }
-}
 
 int main(int argc, char* argv[]) {
     //If no files have been passed

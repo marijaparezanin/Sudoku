@@ -8,7 +8,7 @@
 	on itself. It directly edits the multidimential array and returns false if the grid can't be solved.
 
 	Author: Marija Parezanin
-	Date: 17.12.2023
+	Date: 20.12.2023
 	email: marija.parezanin@mensa.ba
 	F: FTN SIIT, SV1/2022
 */
