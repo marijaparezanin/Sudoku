@@ -116,7 +116,7 @@ bool sudokuSolver(Sudoku& s) {
         return true;
     }
 
-    for (int num = 1; num <= 9;++num) {
+    for (int num = 1; num <= s.sudokuSize;++num) {
         if (rowCheck(s.sudokuTable, i, num) && colCheck(s.sudokuTable, j, num) && boxCheck(s.sudokuTable, i, j, num)) {
             //gives warning because i and j could be -1, but have handled this scenario before array access
             s.sudokuTable[i][j] = num;

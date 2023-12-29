@@ -22,8 +22,8 @@
 void ensureSubmatricesLimit(Sudoku& s) {
     int maxFilledInSubmatrix = 6;
 
-    for (int i = 0; i < 9; i += 3) {
-        for (int j = 0; j < 9; j += 3) {
+    for (int i = 0; i < s.sudokuSize; i += 3) {
+        for (int j = 0; j < s.sudokuSize; j += 3) {
             int filledInSubmatrix = 0;
 
             for (int k = i; k < i + 3; ++k) {
@@ -54,10 +54,10 @@ void generateBaseSudoku(Sudoku& s, int difficulty) {
 
 	sudokuSolver:sudokuSolver(s);
 
-    int numToDelete = 81 - difficulty;
+    int numToDelete = (s.sudokuSize*s.sudokuSize) - difficulty;
     while (numToDelete > 0) {
-        int row = rand() % 9; // Generate a random row index (0-8)
-        int col = rand() % 9; // Generate a random column index (0-8)
+        int row = rand() % s.sudokuSize; // Generate a random row index (0-8)
+        int col = rand() % s.sudokuSize; // Generate a random column index (0-8)
 
         if (s.sudokuTable[row][col] != 0) {
             s.sudokuTable[row][col] = 0;

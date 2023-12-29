@@ -87,17 +87,20 @@ bool testGenerateInsane() {
 
 void displayTestGenerate() {
     bool allTestsPassed = true;
+    for (int i = 0; i < 40; i++) {
+        // Test valid Sudoku completion
+        allTestsPassed &= testGenerateEasy();
 
-    // Test valid Sudoku completion
-    allTestsPassed &= testGenerateEasy();
+        allTestsPassed &= testGenerateMedium();
 
-    allTestsPassed &= testGenerateMedium();
+        allTestsPassed &= testGenerateHard();
 
-    allTestsPassed &= testGenerateHard();
+        allTestsPassed &= testGenerateExtreme();
 
-    allTestsPassed &= testGenerateExtreme();
+        allTestsPassed &= testGenerateInsane();
+    }
 
-    allTestsPassed &= testGenerateInsane();
+    
 
     if (allTestsPassed) {
         std::cout << "Generator tests passed!\n";

@@ -38,7 +38,7 @@ void readFile(Sudoku& s, std::string filePath) {
 	int value = 0;
 	while (true) {
 		ifile >> line;
-		if (row_num == 9 || line == "") {
+		if (row_num == s.sudokuSize || line == "") {
 			return;
 		}
 		for (int i = 0; i < line.length(); i++) {
@@ -72,9 +72,9 @@ void writeFile(Sudoku& s, std::string filePath, bool incGameNum) {
 	}
 
 	string content = "\n\t -------------------\n";
-	for (int i = 0; i < 9;++i) {
+	for (int i = 0; i < s.sudokuSize;++i) {
 		content += "\t |";
-		for (int j = 0;j < 9;++j) {
+		for (int j = 0;j < s.sudokuSize;++j) {
 			//formating help
 			if (j % 3 == 2) {
 				if (s.sudokuTable[i][j] == 0) {
